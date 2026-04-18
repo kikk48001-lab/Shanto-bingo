@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bingo Bet</title>
+
+<style>
+body {
+    text-align:center;
+    font-family:Arial;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color:white;
+    margin:0;
+    padding:0;
+}
+
+/* container */
+.container {
+    margin-top:60px;
+}
+
+/* title */
+h1 {
+    font-size:28px;
+}
+
+/* vertical buttons */
+.bet-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:15px;
+    margin-top:30px;
+}
+
+/* buttons */
+.bet-btn {
+    width:220px;
+    padding:15px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    background:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+/* hover */
+.bet-btn:hover {
+    transform:scale(1.05);
+}
+
+/* active */
+.bet-btn.active {
+    background:#00c853;
+    color:white;
+}
+
+/* bet text */
+#betText {
+    margin-top:25px;
+}
+
+/* reset button */
+.reset-btn {
+    margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:#ff3d00;
+    color:white;
+    cursor:pointer;
+}
+
+/* mobile */
+@media(max-width:600px){
+    .bet-btn {
+        width:80%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💰 Select Bet</h1>
+
+<div class="bet-container">
+    <button class="bet-btn" onclick="selectBet(10,this)">10 Birr</button>
+    <button class="bet-btn" onclick="selectBet(20,this)">20 Birr</button>
+    <button class="bet-btn" onclick="selectBet(30,this)">30 Birr</button>
+    <button class="bet-btn" onclick="selectBet(50,this)">50 Birr</button>
+</div>
+
+<h2 id="betText">Bet: 0 Birr</h2>
+
+<button class="reset-btn" onclick="resetGame()">🔄 Reset</button>
+
+</div>
+
+<script>
+let selected=null;
+
+// select bet
+function selectBet(amount,btn){
+    if(selected) selected.classList.remove("active");
+
+    btn.classList.add("active");
+    selected=btn;
+
+    localStorage.setItem("bet",amount);
+
+    document.getElementById("betText").innerText =
+        "Bet: " + amount + " Birr";
+
+    // go next
+    setTimeout(()=>{
+        window.location="select.html";
+    },500);
+}
+
+// reset
+function resetGame(){
+    if(confirm("Reset game?")){
+        localStorage.clear();
+        document.getElementById("betText").innerText="Bet: 0 Birr";
+
+        if(selected){
+            selected.classList.remove("active");
+            selected=null;
+        }
+    }
+}
+</script>
+
+</body>
+</html>
